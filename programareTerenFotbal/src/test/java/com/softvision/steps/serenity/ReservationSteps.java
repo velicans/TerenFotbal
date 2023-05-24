@@ -6,11 +6,10 @@ import net.thucydides.core.annotations.Step;
 import java.time.LocalDateTime;
 
 public class ReservationSteps {
-
+    LoginPage loginPage;
     @Step
     public void login(String username, String password) {
 
-        LoginPage loginPage = new LoginPage();
         loginPage.setUsername(username);
         loginPage.setPassword(password);
         loginPage.checkAgree();
