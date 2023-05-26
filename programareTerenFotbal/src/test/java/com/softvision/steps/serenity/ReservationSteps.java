@@ -7,9 +7,11 @@ import java.time.LocalDateTime;
 
 public class ReservationSteps {
     LoginPage loginPage;
+    SelectDatePage selectDatePage;
+    SelectSlotPage selectSlotPage;
+    SelectSportPage selectSportPage;
     @Step
     public void login(String username, String password) {
-
         loginPage.setUsername(username);
         loginPage.setPassword(password);
         loginPage.checkAgree();
@@ -18,24 +20,17 @@ public class ReservationSteps {
 
     @Step
     public void selectDate(LocalDateTime date) {
-
-        SelectDatePage selectDatePage = new SelectDatePage();
         selectDatePage.setMonth(date);
         selectDatePage.selectDay(date);
-
     }
 
     @Step
     public void selectSlot(String slot) {
-
-        SelectSlotPage selectSlotPage = new SelectSlotPage();
         selectSlotPage.selectSlot(slot);
     }
 
     @Step
     public void selectSportAndMakeReservation(String sport) {
-
-        SelectSportPage selectSportPage = new SelectSportPage();
         selectSportPage.selectSport(sport);
         selectSportPage.clickMakeReservation();
     }
