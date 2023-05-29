@@ -9,7 +9,7 @@ public class ReservationSteps {
     LoginPage loginPage;
     SelectDatePage selectDatePage;
     SelectSlotPage selectSlotPage;
-    SelectSportPage selectSportPage;
+    ReservationsPage reservationsPage;
     @Step
     public void login(String username, String password) {
         loginPage.setUsername(username);
@@ -31,14 +31,13 @@ public class ReservationSteps {
 
     @Step
     public void selectSportAndMakeReservation(String sport) {
-        selectSportPage.selectSport(sport);
-        selectSportPage.clickMakeReservation();
+        selectSlotPage.selectSport(sport);
+        selectSlotPage.clickMakeReservation();
     }
 
     @Step
     public void validateReservation(LocalDateTime date, String slot, String sport) {
 
-        ReservationsPage reservationsPage = new ReservationsPage();
         reservationsPage.validateReservation();
     }
 }
