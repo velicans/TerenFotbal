@@ -7,12 +7,10 @@ import org.openqa.selenium.WebElement;
 import java.time.LocalDateTime;
 
 public class SelectDatePage extends PageObject {
-
-    private WebElement tableHeaderWE = $("//h2[@class=fc-toolbar-title]");
-    private WebElement nextMonthBtnWE = $("//button[contains(@class, 'fc-next-button')]");
+    private String nextMonthBtnSelector ="//button[contains(@class, 'fc-next-button')]";
     public void setMonth(LocalDateTime reqDate) {
-        while(reqDate.getMonthValue() > LocalDateTime.now().getMonthValue()) {
-            nextMonthBtnWE.click();
+        if(reqDate.getMonthValue() != LocalDateTime.now().getMonthValue()) {
+            $(nextMonthBtnSelector).click();
         }
     }
 

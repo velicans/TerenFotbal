@@ -38,6 +38,6 @@ public class ReservationSteps {
     @Step
     public void validateReservation(LocalDateTime date, String slot, String sport) {
 
-        reservationsPage.validateReservation();
+        reservationsPage.validateReservation(date, slot, sport);
     }
 }
