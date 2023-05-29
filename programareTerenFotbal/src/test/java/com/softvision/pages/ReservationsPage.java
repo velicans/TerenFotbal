@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class ReservationsPage extends PageObject {
@@ -31,18 +32,17 @@ public class ReservationsPage extends PageObject {
         Assert.assertTrue(String.format("Iterated through all the entries in the reservation list and did not find any entry for date %s, sport %s and timeslot %s",date.toString(), sport, timeslot ), flagFound);
     }
 
-    private boolean validateTimeslot(String timeslot, String currTimeslot) {
-        //TODO  have to verify that the timeslot from reseration matches the expected timeslot
-        return false;
+    private boolean validateTimeslot(String expectedTimeslot, String currTimeslot) {
+        return currTimeslot.split(" - ")[0].equalsIgnoreCase(expectedTimeslot);
     }
 
-    private boolean validateSport(String sport, String currSport) {
-        // TODO validate sport name is ok
-        return false;
+    private boolean validateSport(String expectedSport, String currSport) {
+        return expectedSport.equalsIgnoreCase(currSport);
     }
 
-    private boolean validateDate(LocalDateTime date, String currentDateString) {
-        //TODO  have to verify that the timeslot  is "thursday DD MonthName
-        return false;
+    private boolean validateDate(LocalDateTime expectedDate, String currentDateString) {
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("EEEE dd MMMM");
+        String expectedDateString = expectedDate.format(format);
+        return expectedDateString.equalsIgnoreCase(currentDateString);
     }
 }

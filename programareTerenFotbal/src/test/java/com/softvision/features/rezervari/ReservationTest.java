@@ -9,7 +9,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Calendar;
@@ -37,7 +36,7 @@ public class ReservationTest {
         Assert.assertNotNull("Something wrong when trying to compute the last thursday", date);
         reservationSteps.selectDate(date);
 
-        String slot = "06:00";
+        String slot = "20:00";
         String sport = "Football";
         reservationSteps.selectSlot(slot);
 
@@ -53,8 +52,8 @@ public class ReservationTest {
         cal.setTime(Date.from(initDate.atZone(ZoneId.systemDefault()).toInstant()));
         //increase month with 1
         cal.add(Calendar.MONTH, 1);
-        LocalDateTime workDate = LocalDateTime.ofInstant(cal.getTime().toInstant(), ZoneId.systemDefault());;
-        while(initDate.isBefore(workDate)){
+        LocalDateTime workDate = LocalDateTime.ofInstant(cal.getTime().toInstant(), ZoneId.systemDefault());
+        while(initDate.isBefore(workDate)) {
             workDate = LocalDateTime.ofInstant(cal.getTime().toInstant(), ZoneId.systemDefault());
             if (workDate.getDayOfWeek().toString().equals("THURSDAY")) {
                 return workDate;
