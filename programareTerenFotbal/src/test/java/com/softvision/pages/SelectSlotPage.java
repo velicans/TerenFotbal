@@ -8,9 +8,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
+
 public class SelectSlotPage extends PageObject {
 
-    private String wholeResListSelector = "//div[@id='table-template-container_wrapper']";
+    private String reservationRowSelector = "//tr[@attr-slot='undefined']";
     private String bookBtnSelector = "//button[@type='submit']";
     private String sportPopupWholeSelector = "//form[contains(@class, 'sc-submit-reservation')]";
     private String selectSportDropDownSelector = "//div[@class='select-selected']";
@@ -22,17 +24,24 @@ public class SelectSlotPage extends PageObject {
     private String handballSelector = "//div[text()='Handball']";
     private String volleyballSelector = "//div[text()='Volleyball']";
     private String makeReservationSelector = "//button[text()='Make a reservation']";;
-    public void selectSlot(String timeSlot){
-        // check if timeslot is available
-        String timeSlotXpathSelector = String.format("//label[text()='%s']/ancestor::tr//child::label[@class='status']", timeSlot);
-        WebElement timeSlotWE = $(wholeResListSelector).findElement(By.xpath(timeSlotXpathSelector));
-        if(timeSlotWE.getText().equalsIgnoreCase("available")) {
-            timeSlotWE.click();
-            $(bookBtnSelector).click();
+    public void selectSlot(String expectedTimeslotStart){
+        boolean flagFound = false;
+        List<WebElementFacade> reservationRowListWE = $$(reservationRowSelector);
+        for(WebElementFacade reservationRow:reservationRowListWE) {
+            List<WebElement> elementsInRow = reservationRow.findElements(By.cssSelector("td"));
+            if(elementsInRow.get(0).getText().equalsIgnoreCase(expectedTimeslotStart)) {
+                flagFound = true;
+                // validate that the reservation is not taken by somebody else
+                if(elementsInRow.get(2).getText().equalsIgnoreCase("available")) {
+                    elementsInRow.get(2).click();
+                    $(bookBtnSelector).click();
+                }
+                else {
+                    Assert.fail(String.format("The timeslot that starts ar time %s is taken by somebody else", expectedTimeslotStart));
+                }
+            }
         }
-        else {
-            Assert.fail(String.format("Timeslot %s is already occupied by somebody else", timeSlot));
-        }
+        Assert.assertTrue(String.format("Iterated through all timeslots and did not find any slot that starts with time %s", expectedTimeslotStart), flagFound);
     }
 
     public void selectSport(String sport) {
