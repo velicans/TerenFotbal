@@ -6,11 +6,12 @@ import net.thucydides.core.annotations.Step;
 import java.time.LocalDateTime;
 
 public class ReservationSteps {
-
+    LoginPage loginPage;
+    SelectDatePage selectDatePage;
+    SelectSlotPage selectSlotPage;
+    ReservationsPage reservationsPage;
     @Step
     public void login(String username, String password) {
-
-        LoginPage loginPage = new LoginPage();
         loginPage.setUsername(username);
         loginPage.setPassword(password);
         loginPage.checkAgree();
@@ -19,32 +20,24 @@ public class ReservationSteps {
 
     @Step
     public void selectDate(LocalDateTime date) {
-
-        SelectDatePage selectDatePage = new SelectDatePage();
         selectDatePage.setMonth(date);
         selectDatePage.selectDay(date);
-
     }
 
     @Step
     public void selectSlot(String slot) {
-
-        SelectSlotPage selectSlotPage = new SelectSlotPage();
         selectSlotPage.selectSlot(slot);
     }
 
     @Step
     public void selectSportAndMakeReservation(String sport) {
-
-        SelectSportPage selectSportPage = new SelectSportPage();
-        selectSportPage.selectSport(sport);
-        selectSportPage.clickMakeReservation();
+        selectSlotPage.selectSport(sport);
+        selectSlotPage.clickMakeReservation();
     }
 
     @Step
     public void validateReservation(LocalDateTime date, String slot, String sport) {
 
-        ReservationsPage reservationsPage = new ReservationsPage();
-        reservationsPage.validateReservation();
+        reservationsPage.validateReservation(date, slot, sport);
     }
 }
