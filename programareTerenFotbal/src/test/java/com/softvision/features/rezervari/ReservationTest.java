@@ -29,7 +29,7 @@ public class ReservationTest {
         driver.get("https://rezervari.tnsquare.ro/calendar");
 
         String username = "administrativbucuresti@softvision.com";
-        String password = "Softvision10";
+        String password = "";
         reservationSteps.login(username, password);
 
         LocalDateTime date = getLastThursday(LocalDateTime.now());
